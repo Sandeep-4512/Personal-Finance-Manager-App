@@ -1,31 +1,35 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import dotenv from "dotenv"; // Load environment variables
 import { connectDB } from "./DB/Database.js";
 import transactionRoutes from "./Routers/Transactions.js";
 import userRoutes from "./Routers/userRouter.js";
 
-//app is express server
-const app = express();
-const port = 4000;
+dotenv.config(); // Load .env file
 
-//database connection triggered
+const app = express();
+const port = process.env.PORT || 4000; // Use port from .env or default to 4000
+
+// Connect to MongoDB
 connectDB();
-//we are registering cors - Cross Origin Resource Sharing - This allow our server to respond to our frontend requests
+
+// Enable CORS for frontend requests
 app.use(cors());
 
-// Middleware - is a logic which executes before the backend
-app.use(express.json());//{key:value}
-app.use(bodyParser.urlencoded({ extended: false }));//name=hmg
+// Middleware - Parse JSON and URL-encoded data
+app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 
-// Adding 2 routes
-app.use("/api/v1", transactionRoutes);//all end points related to credit/debit transactions
-app.use("/api/auth", userRoutes);//this all end points related to users -> login, signup
+// API Routes
+app.use("/api/v1", transactionRoutes);
+app.use("/api/auth", userRoutes);
 
 app.get("/", (req, res) => {
   res.send("FinManager Server is working");
 });
 
+// Start the server
 app.listen(port, () => {
-  console.log(`Server is listening on http://localhost:${port}`);
+  console.log(`🚀 Server is running on http://localhost:${port}`);
 });
