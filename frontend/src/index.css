@@ -1,5 +1,76 @@
-*{
-    padding: 0px;
-    margin: 0px;
-    /* background-color: black !important;; */
+/* index.css */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #4361ee;        /* Vibrant blue */
+    --secondary-color: #3a0ca3;     /* Deep purple */
+    --accent-color: #f72585;        /* Pink accent */
+    --light-color: #f8f9fa;         /* Off-white */
+    --dark-color: #212529;          /* Dark gray */
+    --success-color: #4cc9f0;       /* Light blue */
+    --warning-color: #ffbe0b;       /* Yellow */
+    --danger-color: #ef233c;        /* Red */
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    min-height: 100vh;
+    color: var(--dark-color);
+    line-height: 1.6;
+}
+
+/* Toast container customization */
+.Toastify__toast-container {
+    width: 320px;
+}
+
+.Toastify__toast {
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.Toastify__toast--success {
+    background: var(--success-color);
+}
+
+.Toastify__toast--warning {
+    background: var(--warning-color);
+}
+
+.Toastify__toast--error {
+    background: var(--danger-color);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-color);
+}
+
+/* Animation for page transitions */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#root {
+    animation: fadeIn 0.5s ease-out;
 }
