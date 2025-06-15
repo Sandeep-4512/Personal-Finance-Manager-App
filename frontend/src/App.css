@@ -174,3 +174,34 @@
 .link:hover {
   text-decoration: underline;
 }
+/* Dot Elimination Protocol */
+* {
+  /* Remove all potential dot sources */
+  box-shadow: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  
+  /* Reset pseudo-elements */
+  &::before, &::after {
+    content: none !important;
+    background: none !important;
+  }
+}
+
+/* Kill all animations */
+* {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Nuclear option for canvas elements */
+canvas, iframe, video {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Force solid backgrounds */
+body, .App, .auth-container {
+  background: #f5f5f5 !important;
+  background-image: none !important;
+}
