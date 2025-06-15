@@ -1,10 +1,40 @@
-.lnk{
+/* Link Style */
+a.lnk {
     text-decoration: none;
+    color: #333; /* Default text color */
+    font-weight: 500;
+    transition: color 0.3s ease;
 }
-.btnStyle{
-    background-color: red;
-    border: 2px solid red;
+
+a.lnk:hover {
+    color: #ff4444; /* Hover color matching the button */
 }
-.btnStyle:hover{
-    background-color: rgb(75, 11, 11);
+
+/* Button Style */
+.btnStyle {
+    background-color: #ff4444; /* Modern red */
+    border: 2px solid #ff4444;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px; /* Rounded corners */
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Smooth transition for all properties */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    display: inline-block; /* Ensures padding works properly */
+    text-align: center;
+}
+
+/* Hover Effect */
+.btnStyle:hover {
+    background-color: #cc0000; /* Darker red */
+    border-color: #cc0000;
+    transform: translateY(-2px); /* Slight lift effect */
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15); /* Enhanced shadow on hover */
+}
+
+/* Active (Click) Effect */
+.btnStyle:active {
+    transform: translateY(0); /* Reset lift when clicked */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Pressed effect */
 }
