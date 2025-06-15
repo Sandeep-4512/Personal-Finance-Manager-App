@@ -1,3 +1,43 @@
+/* Add this to the TOP of your App.css */
+* {
+  /* 1. Kill all possible dot sources */
+  box-shadow: none !important;
+  text-shadow: none !important;
+  background-image: none !important;
+  list-style: none !important;
+  
+  /* 2. Disable all animations */
+  animation: none !important;
+  transition: none !important;
+  
+  /* 3. Reset pseudo-elements */
+  &::before, &::after {
+    content: "" !important;
+    display: none !important;
+    background: transparent !important;
+  }
+}
+
+/* 4. Nuclear option for canvas/WebGL */
+canvas, iframe, svg, video, [class*="particle"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* 5. Force solid backgrounds */
+body, .App, .auth-container, .main-container {
+  background: #ffffff !important;
+  background-image: none !important;
+}
+
+/* 6. GPU rendering fix */
+body {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
 /* ===== Global Reset ===== */
 * {
   margin: 0;
