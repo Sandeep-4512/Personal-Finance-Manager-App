@@ -1,1 +1,123 @@
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
 
+/* ===== Body and Wrapper ===== */
+body, html, #root {
+  min-height: 100vh;
+  background-color: #f3f4f6; /* Light gray */
+}
+
+.App {
+  min-height: 100vh;
+  background-color: #f8fafc; /* Softer gray-blue */
+  padding: 20px;
+}
+
+/* ===== Container for Pages ===== */
+.page-container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== Headings ===== */
+h1, h2, h3, h4 {
+  color: #1e293b; /* Slate */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* ===== Forms ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+input, select, textarea {
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 15px;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #3b82f6;
+}
+
+/* ===== Buttons ===== */
+button, .btn {
+  background-color: #3b82f6;
+  color: #ffffff;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+button:hover, .btn:hover {
+  background-color: #2563eb;
+}
+
+/* ===== Links ===== */
+a {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Avatar Setup (Optional) ===== */
+.avatar-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  border: 2px solid #3b82f6;
+  object-fit: cover;
+}
+
+/* ===== Home Page Cards (Optional) ===== */
+.card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 600px) {
+  .page-container {
+    padding: 20px;
+    margin: 20px;
+  }
+
+  h1, h2 {
+    font-size: 20px;
+  }
+}
