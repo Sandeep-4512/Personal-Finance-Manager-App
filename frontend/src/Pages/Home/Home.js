@@ -6,7 +6,7 @@ import Spinner from "../../components/Spinner";
 import TableData from "./TableData";
 import Analytics from "./Analytics";
 import { useNavigate } from "react-router-dom";
-import { Button, Modal, Form, Container, Badge } from "react-bootstrap";
+import { Button, Modal, Form, Container } from "react-bootstrap";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,7 +14,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import BarChartIcon from "@mui/icons-material/BarChart";
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
@@ -50,7 +49,6 @@ const Home = () => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [view, setView] = useState("table");
-  const [balance, setBalance] = useState(0);
 
   const handleStartChange = (date) => setStartDate(date);
   const handleEndChange = (date) => setEndDate(date);
@@ -84,6 +82,14 @@ const Home = () => {
 
   const handleChange = (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
+  };
+
+  const handleChangeFrequency = (e) => {
+    setFrequency(e.target.value);
+  };
+
+  const handleSetType = (e) => {
+    setType(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -123,16 +129,11 @@ const Home = () => {
     setLoading(false);
   };
 
-  const calculateBalance = () => {
-    let total = 0;
-    transactions.forEach(transaction => {
-      if (transaction.transactionType === "credit") {
-        total += transaction.amount;
-      } else {
-        total -= transaction.amount;
-      }
-    });
-    setBalance(total);
+  const handleReset = () => {
+    setType("all");
+    setStartDate(null);
+    setEndDate(null);
+    setFrequency("7");
   };
 
   useEffect(() => {
@@ -147,7 +148,6 @@ const Home = () => {
           type,
         });
         setTransactions(data.transactions || []);
-        calculateBalance();
       } catch (err) {
         toast.error("Error loading transactions", toastOptions);
       } finally {
@@ -158,50 +158,36 @@ const Home = () => {
     if (cUser?._id) fetchAllTransactions();
   }, [refresh, frequency, endDate, type, startDate, cUser]);
 
+  const handleTableClick = (e) => {
+    setView("table");
+  };
+
+  const handleChartClick = (e) => {
+    setView("chart");
+  };
+
   return (
-    <div className="home-container">
+    <>
       <Header />
       
-      <div className="welcome-section">
+      <div className="datetime-container">
         <Container>
-          <div className="welcome-content">
-            <h2>Welcome back, <span>{cUser?.username || 'User'}</span>!</h2>
-            <div className="info-cards">
-              <div className="info-card">
-                <AccountBalanceWalletIcon className="info-icon" />
-                <div>
-                  <p>Current Balance</p>
-                  <h3 className={balance >= 0 ? 'positive' : 'negative'}>
-                    ${balance.toFixed(2)}
-                  </h3>
-                </div>
-              </div>
-              <div className="info-card">
-                <CalendarTodayIcon className="info-icon" />
-                <div>
-                  <p>Today's Date</p>
-                  <h3>
-                    {currentDateTime.toLocaleDateString('en-US', {
-                      month: 'short',
-                      day: 'numeric',
-                      year: 'numeric'
-                    })}
-                  </h3>
-                </div>
-              </div>
-              <div className="info-card">
-                <AccessTimeIcon className="info-icon" />
-                <div>
-                  <p>Current Time</p>
-                  <h3>
-                    {currentDateTime.toLocaleTimeString('en-US', {
-                      hour: '2-digit',
-                      minute: '2-digit'
-                    })}
-                  </h3>
-                </div>
-              </div>
-            </div>
+          <div className="datetime-display">
+            <CalendarTodayIcon className="datetime-icon" />
+            <span>
+              {currentDateTime.toLocaleDateString('en-US', {
+                weekday: 'short',
+                month: 'short',
+                day: 'numeric'
+              })}
+            </span>
+            <AccessTimeIcon className="datetime-icon" />
+            <span>
+              {currentDateTime.toLocaleTimeString('en-US', {
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </span>
           </div>
         </Container>
       </div>
@@ -209,114 +195,219 @@ const Home = () => {
       {loading ? (
         <Spinner />
       ) : (
-        <Container className="main-content">
-          <div className="filter-row">
-            <div className="filter-group">
-              <Form.Label>Select Frequency</Form.Label>
-              <Form.Select
-                name="frequency"
-                value={frequency}
-                onChange={(e) => setFrequency(e.target.value)}
-              >
-                <option value="7">Last Week</option>
-                <option value="30">Last Month</option>
-                <option value="365">Last Year</option>
-                <option value="custom">Custom</option>
-              </Form.Select>
+        <Container
+          style={{ position: "relative", zIndex: "2 !important", backgroundColor:'black' }}
+          className="mt-1"
+        >
+          <div className="filterRow">
+            <div className="text-white">
+              <Form.Group className="mb-3" controlId="formSelectFrequency">
+                <Form.Label>Select Frequency</Form.Label>
+                <Form.Select
+                  name="frequency"
+                  value={frequency}
+                  onChange={handleChangeFrequency}
+                >
+                  <option value="7">Last Week</option>
+                  <option value="30">Last Month</option>
+                  <option value="365">Last Year</option>
+                  <option value="custom">Custom</option>
+                </Form.Select>
+              </Form.Group>
             </div>
 
-            {frequency === "custom" && (
-              <div className="date-range">
-                <div className="date-picker">
-                  <Form.Label>Start Date</Form.Label>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={handleStartChange}
-                    selectsStart
-                    startDate={startDate}
-                    endDate={endDate}
-                    className="form-control"
-                  />
+            <div className="text-white type">
+              <Form.Group className="mb-3" controlId="formSelectFrequency">
+                <Form.Label>Type</Form.Label>
+                <Form.Select
+                  name="type"
+                  value={type}
+                  onChange={handleSetType}
+                >
+                  <option value="all">All</option>
+                  <option value="expense">Expense</option>
+                  <option value="credit">Income</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
+
+            <div className="text-white iconBtnBox">
+              <FormatListBulletedIcon
+                sx={{ cursor: "pointer" }}
+                onClick={handleTableClick}
+                className={`${
+                  view === "table" ? "iconActive" : "iconDeactive"
+                }`}
+              />
+              <BarChartIcon
+                sx={{ cursor: "pointer" }}
+                onClick={handleChartClick}
+                className={`${
+                  view === "chart" ? "iconActive" : "iconDeactive"
+                }`}
+              />
+            </div>
+
+            <div>
+              <Button onClick={handleShow} className="addNew">
+                Add New
+              </Button>
+              <Button onClick={handleShow} className="mobileBtn">
+                +
+              </Button>
+              <Modal show={show} onHide={handleClose} centered>
+                <Modal.Header closeButton>
+                  <Modal.Title>Add Transaction Details</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Form>
+                    <Form.Group className="mb-3" controlId="formName">
+                      <Form.Label>Title</Form.Label>
+                      <Form.Control
+                        name="title"
+                        type="text"
+                        placeholder="Enter Transaction Name"
+                        value={values.name}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formAmount">
+                      <Form.Label>Amount</Form.Label>
+                      <Form.Control
+                        name="amount"
+                        type="number"
+                        placeholder="Enter your Amount"
+                        value={values.amount}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formSelect">
+                      <Form.Label>Category</Form.Label>
+                      <Form.Select
+                        name="category"
+                        value={values.category}
+                        onChange={handleChange}
+                      >
+                        <option value="">Choose...</option>
+                        <option value="Groceries">Groceries</option>
+                        <option value="Rent">Rent</option>
+                        <option value="Salary">Salary</option>
+                        <option value="Tip">Tip</option>
+                        <option value="Food">Food</option>
+                        <option value="Medical">Medical</option>
+                        <option value="Utilities">Utilities</option>
+                        <option value="Entertainment">Entertainment</option>
+                        <option value="Transportation">Transportation</option>
+                        <option value="Other">Other</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formDescription">
+                      <Form.Label>Description</Form.Label>
+                      <Form.Control
+                        type="text"
+                        name="description"
+                        placeholder="Enter Description"
+                        value={values.description}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formSelect1">
+                      <Form.Label>Transaction Type</Form.Label>
+                      <Form.Select
+                        name="transactionType"
+                        value={values.transactionType}
+                        onChange={handleChange}
+                      >
+                        <option value="">Choose...</option>
+                        <option value="credit">Credit</option>
+                        <option value="expense">Expense</option>
+                      </Form.Select>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formDate">
+                      <Form.Label>Date</Form.Label>
+                      <Form.Control
+                        type="date"
+                        name="date"
+                        value={values.date}
+                        onChange={handleChange}
+                      />
+                    </Form.Group>
+                  </Form>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Close
+                  </Button>
+                  <Button variant="primary" onClick={handleSubmit}>
+                    Submit
+                  </Button>
+                </Modal.Footer>
+              </Modal>
+            </div>
+          </div>
+          <br style={{ color: "white" }}></br>
+
+          {frequency === "custom" ? (
+            <>
+              <div className="date">
+                <div className="form-group">
+                  <label htmlFor="startDate" className="text-white">
+                    Start Date:
+                  </label>
+                  <div>
+                    <DatePicker
+                      selected={startDate}
+                      onChange={handleStartChange}
+                      selectsStart
+                      startDate={startDate}
+                      endDate={endDate}
+                    />
+                  </div>
                 </div>
-                <div className="date-picker">
-                  <Form.Label>End Date</Form.Label>
-                  <DatePicker
-                    selected={endDate}
-                    onChange={handleEndChange}
-                    selectsEnd
-                    startDate={startDate}
-                    endDate={endDate}
-                    minDate={startDate}
-                    className="form-control"
-                  />
+                <div className="form-group">
+                  <label htmlFor="endDate" className="text-white">
+                    End Date:
+                  </label>
+                  <div>
+                    <DatePicker
+                      selected={endDate}
+                      onChange={handleEndChange}
+                      selectsEnd
+                      startDate={startDate}
+                      endDate={endDate}
+                      minDate={startDate}
+                    />
+                  </div>
                 </div>
               </div>
-            )}
+            </>
+          ) : (
+            <></>
+          )}
 
-            <div className="filter-group">
-              <Form.Label>Type</Form.Label>
-              <Form.Select
-                name="type"
-                value={type}
-                onChange={(e) => setType(e.target.value)}
-              >
-                <option value="all">All</option>
-                <option value="expense">Expense</option>
-                <option value="credit">Income</option>
-              </Form.Select>
-            </div>
-
-            <div className="view-toggle">
-              <Button
-                variant={view === "table" ? "primary" : "outline-primary"}
-                onClick={() => setView("table")}
-              >
-                <FormatListBulletedIcon /> Table
-              </Button>
-              <Button
-                variant={view === "chart" ? "primary" : "outline-primary"}
-                onClick={() => setView("chart")}
-              >
-                <BarChartIcon /> Chart
-              </Button>
-            </div>
-
-            <Button onClick={handleShow} className="add-button">
-              + Add Transaction
+          <div className="containerBtn">
+            <Button variant="primary" onClick={handleReset}>
+              Reset Filter
             </Button>
           </div>
-
-          <div className="content-area">
-            {view === "table" ? (
+          {view === "table" ? (
+            <>
               <TableData data={transactions} user={cUser} />
-            ) : (
+            </>
+          ) : (
+            <>
               <Analytics transactions={transactions} user={cUser} />
-            )}
-          </div>
+            </>
+          )}
+          <ToastContainer />
         </Container>
       )}
-
-      <Modal show={show} onHide={handleClose} centered>
-        <Modal.Header closeButton>
-          <Modal.Title>Add New Transaction</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form onSubmit={handleSubmit}>
-            {/* Form fields remain the same as before */}
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cancel
-          </Button>
-          <Button variant="primary" onClick={handleSubmit}>
-            {loading ? "Processing..." : "Save Transaction"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
-
-      <ToastContainer />
-    </div>
+    </>
   );
 };
 
