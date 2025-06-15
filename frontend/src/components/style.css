@@ -1,51 +1,34 @@
-.navbarCSS {
+.navbarCSS{
     padding: 15px 20px;
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between !important;
+    width: 100vw;
+    
+}
+
+
+
+.navItemCSS{
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     width: 100%;
-    box-sizing: border-box;
-    background-color: #ffffff; /* Add your preferred background color */
-    border-bottom: 1px solid #e0e0e0; /* Optional border */
 }
 
-.navItemCSS {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    list-style-type: none;
-}
+/* .custom-toggler.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  } */
 
-/* Remove any transition/animation properties */
-.navItemCSS a,
-.navItemCSS button {
-    text-decoration: none;
-    color: inherit;
-    padding: 8px 12px;
-    border: none;
-    background: none;
-    cursor: pointer;
-}
-
-/* Mobile styles */
-@media only screen and (max-width: 600px) {
+/* 
+  @media only screen and (max-width: 600px) {
     .navbarCSS {
-        padding: 10px 15px;
+        padding: 0px 0px !important;
     }
-    
-    .navItemCSS {
-        flex-direction: column;
-        align-items: flex-start;
-        display: none; /* Typically controlled by JS for mobile menus */
+    .navTitle{
+        font-size: 16px !important;
     }
-    
-    /* Show mobile menu when active */
-    .navItemCSS.mobile-active {
-        display: flex;
-    }
-}
+
+  } */
