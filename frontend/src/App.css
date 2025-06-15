@@ -1,13 +1,22 @@
-/* Base Styles */
+/* ===== Global Reset ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: relative;
+  color: #000000; /* Force black text everywhere */
+}
+
+/* ===== Base Styles ===== */
 .App {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background-color: #f5f5f5; /* Light gray instead of solid grey */
+  background-color: #ffffff !important; /* Pure white background */
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-/* Layout Styles */
+/* ===== Layout Styles ===== */
 .main-container {
   flex: 1;
   display: flex;
@@ -16,43 +25,41 @@
   margin: 0 auto;
   width: 100%;
   padding: 20px;
+  background: transparent !important;
 }
 
-/* Auth Page Common Styles */
+/* ===== Auth Page Styles ===== */
 .auth-container {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: #ffffff !important; /* Removed gradient */
 }
 
 .auth-form {
-  background: white;
+  background: rgba(255, 255, 255, 0.98) !important; /* Slightly transparent white */
   padding: 2.5rem;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); /* Softer shadow */
   width: 100%;
   max-width: 450px;
   margin: 20px;
-}
-
-.auth-header {
-  text-align: center;
-  margin-bottom: 2rem;
+  border: 1px solid #f0f0f0; /* Light border */
 }
 
 .auth-header h2 {
-  color: #2c3e50;
+  color: #000000 !important; /* Black text */
   font-weight: 600;
 }
 
-/* Avatar Page Styles */
+/* ===== Avatar Page Styles ===== */
 .avatar-selection {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 2rem;
+  background: transparent !important;
 }
 
 .avatar-grid {
@@ -62,44 +69,46 @@
   width: 100%;
   max-width: 800px;
   margin-top: 2rem;
+  background: transparent !important;
 }
 
 .avatar-item {
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   border-radius: 8px;
   overflow: hidden;
   border: 3px solid transparent;
+  background: #ffffff !important;
 }
 
 .avatar-item:hover {
-  transform: scale(1.05);
+  transform: scale(1.03); /* More subtle hover */
 }
 
 .avatar-item.selected {
-  border-color: #3498db;
+  border-color: #000000; /* Black border for selected */
 }
 
-/* Button Styles */
+/* ===== Button Styles ===== */
 .btn-primary {
-  background-color: #3498db;
+  background-color: #000000 !important; /* Black button */
   border: none;
   padding: 12px 24px;
   border-radius: 8px;
-  color: white;
+  color: #ffffff !important; /* White text */
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   width: 100%;
   margin-top: 1rem;
 }
 
 .btn-primary:hover {
-  background-color: #2980b9;
-  transform: translateY(-2px);
+  background-color: #333333 !important; /* Dark gray hover */
+  transform: translateY(-1px); /* More subtle lift */
 }
 
-/* Form Elements */
+/* ===== Form Elements ===== */
 .form-group {
   margin-bottom: 1.5rem;
 }
@@ -107,19 +116,26 @@
 .form-control {
   width: 100%;
   padding: 12px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #e0e0e0 !important;
   border-radius: 8px;
   font-size: 1rem;
-  transition: border 0.3s ease;
+  transition: border 0.2s ease;
+  background: rgba(255, 255, 255, 0.9) !important;
 }
 
 .form-control:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+  border-color: #000000 !important; /* Black border on focus */
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); /* Subtler focus shadow */
 }
 
-/* Responsive Design */
+/* ===== Transparency Fixes ===== */
+table, tr, td {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: #f0f0f0 !important;
+}
+
+/* ===== Responsive Design ===== */
 @media (max-width: 768px) {
   .auth-form {
     padding: 1.5rem;
@@ -142,17 +158,7 @@
   }
 }
 
-/* Animation Effects */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.auth-form, .avatar-selection {
-  animation: fadeIn 0.5s ease-out forwards;
-}
-
-/* Utility Classes */
+/* ===== Utility Classes ===== */
 .text-center {
   text-align: center;
 }
@@ -166,42 +172,26 @@
 }
 
 .link {
-  color: #3498db;
-  text-decoration: none;
+  color: #000000 !important; /* Black links */
+  text-decoration: underline;
   cursor: pointer;
 }
 
 .link:hover {
-  text-decoration: underline;
-}
-/* Dot Elimination Protocol */
-* {
-  /* Remove all potential dot sources */
-  box-shadow: none !important;
-  text-shadow: none !important;
-  background-image: none !important;
-  
-  /* Reset pseudo-elements */
-  &::before, &::after {
-    content: none !important;
-    background: none !important;
-  }
+  text-decoration: none;
 }
 
-/* Kill all animations */
-* {
-  animation: none !important;
-  transition: none !important;
+/* ===== Visual Consistency Fixes ===== */
+*::before, *::after {
+  content: none !important;
+  background: none !important;
 }
 
-/* Nuclear option for canvas elements */
-canvas, iframe, video {
-  display: none !important;
-  visibility: hidden !important;
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 6px;
 }
-
-/* Force solid backgrounds */
-body, .App, .auth-container {
-  background: #f5f5f5 !important;
-  background-image: none !important;
+::-webkit-scrollbar-thumb {
+  background: #cccccc;
+  border-radius: 3px;
 }
