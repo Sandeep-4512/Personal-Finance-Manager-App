@@ -1,115 +1,161 @@
-.filterRow{
+/* Filter Row - Modern Card-like Design */
+.filterRow {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 20px;
-
+    padding: 16px 24px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    margin-bottom: 24px;
 }
 
+/* Data Table - Clean Professional Style */
 .data-table {
-    border-collapse: collapse;
-  }
-  
-.data-table thead th {
-    background-color: #f5f5f5;
-}
-
-.icons-handle{
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 15px;
-    /* width: 100%; */
-}
-
-.date{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 10px;
-}
-  
-/* .data-table tbody tr:hover {
-    background-color: #f5f5f5;
-    cursor: pointer;
-}
-  
-.data-table tbody tr:nth-child(even) {
-    background-color: #f8f8f8;
-} */
-
-.containerBtn{
-    display: flex;
-    align-items: center;
-    justify-content:center;
-    margin-bottom: 20px;
     width: 100%;
-    margin-left: 20px;
-}
-.mobileBtn{
-    display: none !important;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.9rem;
 }
 
-.iconBtnBox{
+.data-table thead th {
+    background-color: #f8f9fa;
+    color: #495057;
+    padding: 12px 16px;
+    text-align: left;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    border-bottom: 2px solid #e9ecef;
+}
+
+.data-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #e9ecef;
+    vertical-align: middle;
+}
+
+.data-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* Hover and Striping Effects */
+.data-table tbody tr:hover {
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.data-table tbody tr:nth-child(even) {
+    background-color: #fcfcfc;
+}
+
+/* Icon Container - Better Spacing */
+.icons-handle {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 8px 0;
+}
+
+/* Date Filter - Improved Layout */
+.date {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+/* Button Container - Centered Actions */
+.containerBtn {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    border: 2px solid white;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+/* Icon Buttons - Modern Interactive Style */
+.iconBtnBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 12px;
     border-radius: 8px;
-    
-
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-.iconActive{
-    background-color: white;
-    color: black;
-}
-.iconDeactive{
-    background-color: rgb(78, 74, 78);
-    color: black;
+.iconActive {
+    background-color: #ffffff;
+    color: #212529;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-@media only screen and (max-width: 600px) {
+.iconDeactive {
+    background-color: #e9ecef;
+    color: #6c757d;
+}
+
+.iconBtnBox:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Design - Mobile Optimization */
+@media only screen and (max-width: 768px) {
     .filterRow {
-        padding: 0px !important;
-        margin-top: 0px !important;
-        display: flex;
-        gap: "5px";
-        
+        flex-direction: column;
+        align-items: stretch;
+        gap: 16px;
+        padding: 16px;
+        border-radius: 8px;
     }
-    .addNew{
-        /* padding-top: 20px; */
+    
+    .date {
+        flex-direction: column;
+        gap: 12px;
+    }
+    
+    .date .form-group {
+        width: 100% !important;
+    }
+    
+    .addNew {
         display: none !important;
     }
-    .mobileBtn{
-        display: inline-block !important;
-    }
-    .iconBtnBox{
-        display: flex;
-        align-items: center;
+    
+    .mobileBtn {
+        display: flex !important;
         justify-content: center;
-        border: 0px;
-        
+        margin-top: 12px;
     }
     
-    .date{
-        /* padding: 10px; */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: "10px";
-        flex-direction: column;
-        margin-bottom: 10px;
+    .iconBtnBox {
+        padding: 6px 10px;
+        border-radius: 6px;
     }
-    .date .form-group{
-        width: 45%;
+    
+    .data-table {
+        font-size: 0.85rem;
     }
+    
+    .data-table thead th,
+    .data-table tbody td {
+        padding: 8px 12px;
+    }
+}
 
-    .containerBtn{
-        margin-left: 0px !important;
+/* Extra Small Devices */
+@media only screen and (max-width: 480px) {
+    .icons-handle {
+        gap: 12px;
+        justify-content: space-between;
+    }
+    
+    .iconBtnBox {
+        flex-grow: 1;
+        justify-content: center;
     }
 }
