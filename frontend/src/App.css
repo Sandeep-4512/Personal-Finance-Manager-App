@@ -1,3 +1,31 @@
+/* ===== Filter Block Styling (Block 1) ===== */
+.filter-box, .filter-container, .filters {
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+/* Optional: label text clarity */
+.filter-box label,
+.filter-container label {
+  font-weight: 600;
+  color: #1e293b;
+  margin-bottom: 6px;
+  display: block;
+}
+
+/* Align Add New button on the right (optional) */
+.filter-container {
+  justify-content: space-between;
+}
+
 /* ===== Global Reset ===== */
 * {
   margin: 0;
